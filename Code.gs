@@ -52,7 +52,7 @@ function doPost(e) {
     var durationMinutes = parseInt(data.duration, 10) || 30;
     var end = new Date(start.getTime() + durationMinutes * 60000);
 
-    var title = 'Turno: ' + (data.serviceLabel || data.service) + ' — ' + data.name;
+    var title = (data.serviceLabel || data.service) + ' - ' + data.time + ' - ' + data.name + ' - 📞 ' + data.phone + ' - ✉️ ' + (data.email || '-');
     var description = [
       'Cliente: ' + data.name,
       'Teléfono: ' + data.phone,
