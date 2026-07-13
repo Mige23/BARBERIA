@@ -12,7 +12,7 @@
    `CALENDAR_SECRET` abajo. Esto evita que terceros creen eventos.
 */
 window.__BRAND__ = {
-  CALENDAR_ENDPOINT: '', // ej: 'https://script.google.com/macros/s/AKfycb.../exec'
+  CALENDAR_ENDPOINT: 'https://script.google.com/macros/s/AKfycbzSUo5l6sTN1X0o58KMw5kFmlWX9U1vEYjvtpc6BbIlfYi2GThoo4c_fzu0M79nCz1sRA/exec', // ej: 'https://script.google.com/macros/s/AKfycb.../exec'
   CALENDAR_SECRET: '', // pega aquí el mismo token que en Code.gs
   OPEN_HOUR: 9,
   CLOSE_HOUR: 20,
