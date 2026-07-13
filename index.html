@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Golden Barbershop — Barbería Clásica de Precisión</title>
+<meta name="description" content="Golden Barbershop: cortes clásicos, afeitado con navaja y arreglo de barba. Agendá tu turno online, sincronizado con nuestra agenda real.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20260711">
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Utility bar -->
+<div class="utility-bar">
+  <div class="utility-bar__inner">
+    <a href="tel:+5491112345678" class="utility-bar__item">
+      <svg viewBox="0 0 24 24" class="icon icon--sm"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1.1L6.6 10.8z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      +54 9 11 1234-5678
+    </a>
+    <span class="utility-bar__item utility-bar__item--hours">Lun–Sáb 9:00–20:00</span>
+    <a href="https://instagram.com" target="_blank" rel="noopener" class="utility-bar__item utility-bar__social" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" class="icon icon--sm"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- Header / Nav -->
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a href="#inicio" class="brand">
+      <span class="brand__main">GOLDEN</span>
+      <span class="brand__sub">BARBERSHOP</span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="#inicio" class="nav__link">Inicio</a>
+      <a href="#sobre-nosotros" class="nav__link">Sobre Nosotros</a>
+      <a href="#servicios" class="nav__link">Servicios</a>
+      <a href="#agendar" class="nav__link nav__link--cta">Agendar Turno</a>
+    </nav>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO / INICIO -->
+  <section class="hero" id="inicio">
+    <img src="assets/img/hero-barbershop.webp" alt="Barbero de Golden Barbershop cortando el cabello a un cliente en el salón" class="hero__photo" fetchpriority="high">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__content reveal" data-reveal>
+      <p class="eyebrow">Barbería clásica &middot; Desde 2012</p>
+      <h1 class="hero__title">Tradición, navaja<br>y precisión<span class="gold-dot">.</span></h1>
+      <p class="hero__lead">
+        Cortes clásicos, afeitado con navaja y arreglo de barba, hechos con el
+        oficio de siempre. Reservá tu turno online en segundos.
+      </p>
+      <div class="hero__actions">
+        <a href="#agendar" class="btn btn--primary">Agendar turno</a>
+        <a href="#servicios" class="btn btn--ghost">Ver servicios</a>
+      </div>
+    </div>
+    <a href="#sobre-nosotros" class="scroll-cue" aria-label="Bajar">
+      <svg viewBox="0 0 24 24" class="icon"><path d="M12 4v16M5 13l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </section>
+
+  <!-- SOBRE NOSOTROS -->
+  <section class="about" id="sobre-nosotros">
+    <div class="section-inner about__grid">
+      <div class="about__text reveal" data-reveal>
+        <p class="eyebrow">Sobre nosotros</p>
+        <h2 class="section-title">Oficio de barbero,<br>a la manera clásica</h2>
+        <p class="about__p">
+          Golden Barbershop nació de una idea simple: recuperar el ritual del
+          barbero de barrio, esa mezcla de conversación, tijera y navaja que se
+          fue perdiendo. Cada corte se piensa para la persona que tenemos
+          sentada en la silla, no para una foto de catálogo.
+        </p>
+        <p class="about__p">
+          Nuestro equipo se forma en técnica clásica y también en las
+          tendencias actuales, para que salgas con un corte que se ve bien hoy
+          y que vas a poder mantener sin drama en casa.
+        </p>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat__num">12+</span>
+            <span class="stat__label">Años de oficio</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num">8.000+</span>
+            <span class="stat__label">Clientes atendidos</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num">5</span>
+            <span class="stat__label">Barberos expertos</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about__visual reveal" data-reveal>
+        <div class="pole-frame">
+          <svg viewBox="0 0 200 200" class="pole-art">
+            <defs>
+              <linearGradient id="poleStripe" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#C9A227"/>
+                <stop offset="0.5" stop-color="#8a6c14"/>
+                <stop offset="1" stop-color="#C9A227"/>
+              </linearGradient>
+            </defs>
+            <circle cx="100" cy="100" r="92" fill="none" stroke="url(#poleStripe)" stroke-width="1.5"/>
+            <circle cx="100" cy="100" r="70" fill="none" stroke="#F5EFE6" stroke-opacity="0.15" stroke-width="1"/>
+            <path d="M70 55 L130 145 M100 40 L100 160" stroke="#F5EFE6" stroke-opacity="0.25" stroke-width="1"/>
+            <path d="M75 70c8-14 20-14 25-4 5 10 15 10 20 0" fill="none" stroke="#C9A227" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M60 120c40 20 60 20 80 0" fill="none" stroke="#C9A227" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+            <text x="100" y="105" text-anchor="middle" font-family="Cinzel, serif" font-size="13" fill="#F5EFE6" letter-spacing="2">GOLDEN</text>
+            <text x="100" y="122" text-anchor="middle" font-family="Josefin Sans, sans-serif" font-size="8" fill="#C9A227" letter-spacing="4">EST. 2012</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="services" id="servicios">
+    <div class="section-inner">
+      <div class="section-head reveal" data-reveal>
+        <p class="eyebrow">Servicios</p>
+        <h2 class="section-title">Cada servicio, a su tiempo</h2>
+        <p class="section-lead">Precios de referencia. Confirmamos duración exacta al reservar tu turno.</p>
+      </div>
+
+      <div class="services__grid" id="services-grid">
+        <!-- cards injected by data below, hardcoded for no-JS resilience -->
+
+        <article class="service-card reveal" data-reveal data-service="corte-clasico" data-duration="30" data-label="Corte Clásico">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" class="icon"><circle cx="6" cy="6" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 8.5 20 20M20 4 8.5 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="service-card__title">Corte Clásico</h3>
+          <p class="service-card__desc">Tijera y máquina, terminación prolija a la manera tradicional.</p>
+          <div class="service-card__meta"><span>30 min</span><span class="service-card__price">$18</span></div>
+          <button class="service-card__cta" data-book="corte-clasico">Agendar</button>
+        </article>
+
+        <article class="service-card reveal" data-reveal data-service="afeitado-navaja" data-duration="40" data-label="Afeitado Clásico con Navaja">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" class="icon"><path d="M4 20 18 6M14 6h4v4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 20l3-1 1-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="service-card__title">Afeitado con Navaja</h3>
+          <p class="service-card__desc">Toalla caliente, espuma y navaja. El ritual completo.</p>
+          <div class="service-card__meta"><span>40 min</span><span class="service-card__price">$25</span></div>
+          <button class="service-card__cta" data-book="afeitado-navaja">Agendar</button>
+        </article>
+
+        <article class="service-card reveal" data-reveal data-service="arreglo-barba" data-duration="25" data-label="Arreglo de Barba">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" class="icon"><path d="M6 4v6c0 6 3 10 6 10s6-4 6-10V4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 4v5M15 4v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="service-card__title">Arreglo de Barba</h3>
+          <p class="service-card__desc">Perfilado y diseño con navaja, a medida de tu rostro.</p>
+          <div class="service-card__meta"><span>25 min</span><span class="service-card__price">$15</span></div>
+          <button class="service-card__cta" data-book="arreglo-barba">Agendar</button>
+        </article>
+
+        <article class="service-card service-card--featured reveal" data-reveal data-service="combo-golden" data-duration="60" data-label="Combo Golden (Corte + Barba)">
+          <span class="service-card__badge">Más elegido</span>
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" class="icon"><circle cx="6" cy="6" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 8l10 10M18 6 8 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14 20c2-3 2-13 0-16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg>
+          </div>
+          <h3 class="service-card__title">Combo Golden</h3>
+          <p class="service-card__desc">Corte + barba, el ritual completo de barbería clásica.</p>
+          <div class="service-card__meta"><span>60 min</span><span class="service-card__price">$35</span></div>
+          <button class="service-card__cta" data-book="combo-golden">Agendar</button>
+        </article>
+
+        <article class="service-card reveal" data-reveal data-service="color-canas" data-duration="45" data-label="Coloración y Canas">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" class="icon"><path d="M12 3c4 3 6 7 6 10a6 6 0 1 1-12 0c0-3 2-7 6-10z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="service-card__title">Coloración y Canas</h3>
+          <p class="service-card__desc">Tinte profesional para caballero, resultado natural.</p>
+          <div class="service-card__meta"><span>45 min</span><span class="service-card__price">$22</span></div>
+          <button class="service-card__cta" data-book="color-canas">Agendar</button>
+        </article>
+
+        <article class="service-card reveal" data-reveal data-service="diseno-lineas" data-duration="20" data-label="Diseño y Líneas">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" class="icon"><path d="M4 6h16M4 12h10M4 18h13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="service-card__title">Diseño y Líneas</h3>
+          <p class="service-card__desc">Diseños personalizados a máquina, nítidos y precisos.</p>
+          <div class="service-card__meta"><span>20 min</span><span class="service-card__price">$12</span></div>
+          <button class="service-card__cta" data-book="diseno-lineas">Agendar</button>
+        </article>
+
+        <article class="service-card reveal" data-reveal data-service="tratamiento-capilar" data-duration="30" data-label="Tratamiento Capilar">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" class="icon"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
+          <h3 class="service-card__title">Tratamiento Capilar</h3>
+          <p class="service-card__desc">Hidratación y cuidado del cuero cabelludo.</p>
+          <div class="service-card__meta"><span>30 min</span><span class="service-card__price">$20</span></div>
+          <button class="service-card__cta" data-book="tratamiento-capilar">Agendar</button>
+        </article>
+
+        <article class="service-card reveal" data-reveal data-service="corte-infantil" data-duration="25" data-label="Corte Infantil">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" class="icon"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="service-card__title">Corte Infantil</h3>
+          <p class="service-card__desc">Cortes prolijos para los más chicos de la casa.</p>
+          <div class="service-card__meta"><span>25 min</span><span class="service-card__price">$14</span></div>
+          <button class="service-card__cta" data-book="corte-infantil">Agendar</button>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- AGENDAR TURNO -->
+  <section class="booking" id="agendar">
+    <div class="section-inner booking__grid">
+      <div class="booking__intro reveal" data-reveal>
+        <p class="eyebrow">Agendar turno</p>
+        <h2 class="section-title">Reservá tu lugar<br>en la silla</h2>
+        <p class="section-lead">
+          Elegí servicio, día y horario. Tu turno se guarda directamente en
+          nuestra agenda de Google Calendar, así que el barbero ya te está
+          esperando.
+        </p>
+        <ul class="booking__list">
+          <li><svg viewBox="0 0 24 24" class="icon icon--sm"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Confirmación inmediata en pantalla</li>
+          <li><svg viewBox="0 0 24 24" class="icon icon--sm"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Horarios ya ocupados se bloquean solos</li>
+          <li><svg viewBox="0 0 24 24" class="icon icon--sm"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Podés sumarlo a tu propio calendario</li>
+        </ul>
+      </div>
+
+      <form class="booking-form reveal" data-reveal id="booking-form" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="f-name">Nombre y apellido</label>
+            <input type="text" id="f-name" name="name" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="f-phone">Teléfono</label>
+            <input type="tel" id="f-phone" name="phone" required autocomplete="tel" inputmode="tel">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="f-email">Email <span class="optional">(opcional)</span></label>
+            <input type="email" id="f-email" name="email" autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="f-service">Servicio</label>
+            <select id="f-service" name="service" required>
+              <option value="" disabled selected>Elegí un servicio</option>
+              <option value="corte-clasico" data-duration="30">Corte Clásico — $18</option>
+              <option value="afeitado-navaja" data-duration="40">Afeitado con Navaja — $25</option>
+              <option value="arreglo-barba" data-duration="25">Arreglo de Barba — $15</option>
+              <option value="combo-golden" data-duration="60">Combo Golden (Corte + Barba) — $35</option>
+              <option value="color-canas" data-duration="45">Coloración y Canas — $22</option>
+              <option value="diseno-lineas" data-duration="20">Diseño y Líneas — $12</option>
+              <option value="tratamiento-capilar" data-duration="30">Tratamiento Capilar — $20</option>
+              <option value="corte-infantil" data-duration="25">Corte Infantil — $14</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="f-date">Fecha</label>
+            <input type="date" id="f-date" name="date" required>
+          </div>
+          <div class="field">
+            <label for="f-time">Horario</label>
+            <select id="f-time" name="time" required>
+              <option value="" disabled selected>Elegí una fecha primero</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field field--full">
+            <label for="f-barber">Barbero <span class="optional">(opcional)</span></label>
+            <select id="f-barber" name="barber">
+              <option value="Cualquiera" selected>Sin preferencia</option>
+              <option value="Diego">Diego</option>
+              <option value="Bruno">Bruno</option>
+              <option value="Marina">Marina</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label for="f-notes">Comentarios <span class="optional">(opcional)</span></label>
+          <textarea id="f-notes" name="notes" rows="3"></textarea>
+        </div>
+
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+
+        <button type="submit" class="btn btn--primary btn--block" id="form-submit">
+          <span class="btn__label">Confirmar turno</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="section-inner site-footer__grid">
+    <div>
+      <a href="#inicio" class="brand brand--footer">
+        <span class="brand__main">GOLDEN</span>
+        <span class="brand__sub">BARBERSHOP</span>
+      </a>
+      <p class="site-footer__tagline">Tradición, navaja y precisión desde 2012.</p>
+    </div>
+
+    <div class="site-footer__col">
+      <h4>Horarios</h4>
+      <p>Lunes a viernes: 9:00 – 20:00</p>
+      <p>Sábados: 9:00 – 18:00</p>
+      <p>Domingos: cerrado</p>
+    </div>
+
+    <div class="site-footer__col">
+      <h4>Contacto</h4>
+      <p>Av. Principal 123, Ciudad</p>
+      <p><a href="tel:+5491112345678">+54 9 11 1234-5678</a></p>
+      <p><a href="mailto:hola@goldenbarbershop.com">hola@goldenbarbershop.com</a></p>
+    </div>
+
+    <div class="site-footer__col">
+      <h4>Seguinos</h4>
+      <div class="social-row">
+        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" class="icon"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.2" cy="6.8" r="1"/></svg></a>
+        <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" class="icon"><path d="M14 9h3V5h-3c-2.2 0-4 1.8-4 4v2H8v4h2v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></a>
+        <a href="https://wa.me/5491112345678" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" class="icon"><path d="M7 17l-3 1 1-3a8 8 0 1 1 2 2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <p>&copy; <span id="year"></span> Golden Barbershop. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#inicio">Inicio</a>
+  <a href="#sobre-nosotros">Sobre Nosotros</a>
+  <a href="#servicios">Servicios</a>
+  <a href="#agendar" class="mobile-nav__cta">Agendar Turno</a>
+</div>
+
+<script defer src="main.js?v=20260711"></script>
+</body>
+</html>
