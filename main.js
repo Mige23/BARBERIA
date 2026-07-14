@@ -12,8 +12,8 @@
    `CALENDAR_SECRET` abajo. Esto evita que terceros creen eventos.
 */
 window.__BRAND__ = {
-  CALENDAR_ENDPOINT: 'https://script.google.com/macros/s/AKfycbzSUo5l6sTN1X0o58KMw5kFmlWX9U1vEYjvtpc6BbIlfYi2GThoo4c_fzu0M79nCz1sRA/exec', // ej: 'https://script.google.com/macros/s/AKfycb.../exec'
-  CALENDAR_SECRET: 'gb_03d2a09fa54f4eb981cf59179716ab71', // pega aquí el mismo token que en Code.gs
+  CALENDAR_ENDPOINT: 'https://script.google.com/macros/s/AKfycbziYN9m2rcAm66zYStSqtRyIzQ7SbjINWdYouMZ5wY7CcFjNkXPcCpgMwdQ5jmC-CCh/exec', // URL Web App (exec)
+  CALENDAR_SECRET: 'mi-token-secreto-1223', // token secreto proporcionado por el usuario
   OPEN_HOUR: 9,
   CLOSE_HOUR: 20,
   SATURDAY_CLOSE_HOUR: 18,
@@ -127,11 +127,14 @@ safe(function bookingForm() {
   var status = document.getElementById('form-status');
   var submitBtn = document.getElementById('form-submit');
 
-  var today = new Date();
-  var todayStr = today.toISOString().slice(0, 10);
-  dateInput.min = todayStr;
-
   function pad(n) { return String(n).padStart(2, '0'); }
+
+  function localDateStr(d) {
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  }
+
+  var todayStr = localDateStr(new Date());
+  dateInput.min = todayStr;
 
   function buildSlots(dateStr) {
     var slots = [];
@@ -141,21 +144,28 @@ safe(function bookingForm() {
     var closeHour = (day === 6) ? CFG.SATURDAY_CLOSE_HOUR : CFG.CLOSE_HOUR;
     var cursor = CFG.OPEN_HOUR * 60;
     var end = closeHour * 60;
+
+    var now = new Date();
+    var isToday = dateStr === localDateStr(now);
+    var nowMinutes = now.getHours() * 60 + now.getMinutes();
+
     while (cursor + CFG.SLOT_MINUTES <= end) {
-      var h = Math.floor(cursor / 60);
-      var m = cursor % 60;
-      slots.push(pad(h) + ':' + pad(m));
+      if (!isToday || cursor > nowMinutes) {
+        var h = Math.floor(cursor / 60);
+        var m = cursor % 60;
+        slots.push(pad(h) + ':' + pad(m));
+      }
       cursor += CFG.SLOT_MINUTES;
     }
     return slots;
   }
 
-  function renderSlots(slots, busySet) {
+  function renderSlots(slots, busySet, emptyMessage) {
     timeSelect.innerHTML = '';
     if (!slots.length) {
       var opt = document.createElement('option');
       opt.value = '';
-      opt.textContent = 'Cerrado ese día';
+      opt.textContent = emptyMessage || 'Cerrado ese día';
       opt.disabled = true;
       opt.selected = true;
       timeSelect.appendChild(opt);
@@ -200,14 +210,23 @@ safe(function bookingForm() {
       renderSlots([]);
       return;
     }
-    var slots = buildSlots(dateStr);
 
-    if (!CFG.CALENDAR_ENDPOINT) {
-      renderSlots(slots, null);
+    if (dateStr < todayStr) {
+      renderSlots([], null, 'Elegí una fecha a partir de hoy');
+      setStatus('Elegí una fecha a partir de hoy, no se pueden agendar turnos en el pasado.', 'error');
       return;
     }
 
-    renderSlots(slots, null);
+    var slots = buildSlots(dateStr);
+    var closedDay = new Date(dateStr + 'T00:00:00').getDay() === 0;
+    var emptyMsg = closedDay ? 'Cerrado ese día' : 'No quedan horarios disponibles hoy';
+
+    if (!CFG.CALENDAR_ENDPOINT) {
+      renderSlots(slots, null, emptyMsg);
+      return;
+    }
+
+    renderSlots(slots, null, emptyMsg);
     timeSelect.disabled = true;
 
     var url = CFG.CALENDAR_ENDPOINT + '?action=availability&date=' + encodeURIComponent(dateStr);
@@ -215,10 +234,10 @@ safe(function bookingForm() {
       .then(function (r) { return r.json(); })
       .then(function (data) {
         var busySet = data && data.busy ? slotsFromBusyRanges(dateStr, data.busy) : new Set();
-        renderSlots(slots, busySet);
+        renderSlots(slots, busySet, emptyMsg);
       })
       .catch(function () {
-        renderSlots(slots, null); // si falla la consulta, dejamos todos los horarios habilitados
+        renderSlots(slots, null, emptyMsg); // si falla la consulta, dejamos todos los horarios habilitados
       });
   }
 
@@ -260,6 +279,12 @@ safe(function bookingForm() {
 
     var start = new Date(dateStr + 'T' + timeStr + ':00');
     var end = new Date(start.getTime() + duration * 60000);
+
+    if (start.getTime() <= Date.now()) {
+      setStatus('Ese horario ya pasó. Elegí una fecha y hora posteriores al momento actual.', 'error');
+      refreshSlots();
+      return;
+    }
 
     var payload = {
       name: data.get('name'),
