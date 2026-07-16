@@ -17,7 +17,9 @@ window.__BRAND__ = {
   OPEN_HOUR: 9,
   CLOSE_HOUR: 20,
   SATURDAY_CLOSE_HOUR: 18,
-  SLOT_MINUTES: 30
+  SLOT_MINUTES: 30,
+  DEPOSIT_PERCENT: 30, // % del precio del servicio a cobrar como seña. 0 = deshabilitado.
+  CURRENCY: 'ARS'
 };
 
 function safe(fn, name) {
@@ -115,6 +117,32 @@ safe(function serviceShortcuts() {
   });
 }, 'serviceShortcuts');
 
+/* ============ Retorno desde Mercado Pago (?pago=success|pending|failure) ============ */
+safe(function depositReturnStatus() {
+  var params = new URLSearchParams(location.search);
+  var pago = params.get('pago');
+  if (!pago) return;
+
+  var status = document.getElementById('form-status');
+  var messages = {
+    success: ['¡Seña acreditada! Ya reservamos tu horario, te esperamos.', 'success'],
+    pending: ['Tu pago está pendiente de acreditación. Te confirmamos apenas se procese.', 'loading'],
+    failure: ['El pago no se completó. Podés reintentarlo desde el local o contactarnos.', 'error']
+  };
+  var msg = messages[pago];
+  if (status && msg) {
+    status.textContent = msg[0];
+    status.setAttribute('data-state', msg[1]);
+  }
+
+  var target = document.getElementById('agendar');
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  params.delete('pago');
+  var qs = params.toString();
+  history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+}, 'depositReturnStatus');
+
 /* ============ Booking form + Google Calendar link ============ */
 safe(function bookingForm() {
   var CFG = window.__BRAND__;
@@ -126,6 +154,7 @@ safe(function bookingForm() {
   var serviceSelect = document.getElementById('f-service');
   var status = document.getElementById('form-status');
   var submitBtn = document.getElementById('form-submit');
+  var depositBox = document.getElementById('deposit-offer');
 
   function pad(n) { return String(n).padStart(2, '0'); }
 
@@ -263,12 +292,86 @@ safe(function bookingForm() {
     return 'https://calendar.google.com/calendar/render?' + params.toString();
   }
 
+  function computeDepositAmount(price) {
+    if (!CFG.DEPOSIT_PERCENT || !price) return 0;
+    return Math.round(price * CFG.DEPOSIT_PERCENT) / 100;
+  }
+
+  function renderDepositOffer(payload, price) {
+    if (!depositBox) return;
+    depositBox.innerHTML = '';
+
+    var amount = computeDepositAmount(price);
+    if (!amount) return;
+
+    var box = document.createElement('div');
+    box.className = 'deposit-offer__box';
+
+    if (!CFG.CALENDAR_ENDPOINT) {
+      var demoText = document.createElement('p');
+      demoText.textContent = 'Para habilitar el cobro de señas con Mercado Pago, conectá Google Calendar y Mercado Pago (ver SETUP-CALENDAR.md y SETUP-MERCADOPAGO.md).';
+      box.appendChild(demoText);
+      depositBox.appendChild(box);
+      return;
+    }
+
+    var text = document.createElement('p');
+    text.textContent = 'Podés reservar tu horario pagando una seña de $' + amount + ' ' + CFG.CURRENCY +
+      ' (' + CFG.DEPOSIT_PERCENT + '% del servicio) con Mercado Pago.';
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn btn--ghost btn--block';
+    btn.textContent = 'Pagar seña con Mercado Pago';
+    btn.addEventListener('click', function () { payDeposit(payload, amount, btn); });
+
+    box.appendChild(text);
+    box.appendChild(btn);
+    depositBox.appendChild(box);
+  }
+
+  function payDeposit(payload, amount, btn) {
+    btn.disabled = true;
+    btn.textContent = 'Redirigiendo a Mercado Pago…';
+
+    var returnUrl = location.origin + location.pathname;
+    var prefPayload = {
+      action: 'create_preference',
+      title: 'Seña — ' + payload.serviceLabel + ' (' + payload.date + ' ' + payload.time + ')',
+      amount: amount,
+      name: payload.name,
+      email: payload.email,
+      date: payload.date,
+      time: payload.time,
+      service: payload.service,
+      returnUrl: returnUrl
+    };
+    if (CFG.CALENDAR_SECRET) prefPayload.secret = CFG.CALENDAR_SECRET;
+
+    fetch(CFG.CALENDAR_ENDPOINT, {
+      method: 'POST',
+      body: JSON.stringify(prefPayload)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (result) {
+        var url = result && result.ok && (result.initPoint || result.sandboxInitPoint);
+        if (!url) throw new Error((result && result.error) || 'No se pudo iniciar el pago');
+        window.location.href = url;
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.textContent = 'Pagar seña con Mercado Pago';
+        setStatus('No pudimos iniciar el pago de la seña. Intentá de nuevo o contactanos.', 'error');
+      });
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
     var data = new FormData(form);
     var serviceOpt = serviceSelect.options[serviceSelect.selectedIndex];
     var duration = serviceOpt ? parseInt(serviceOpt.getAttribute('data-duration'), 10) || 30 : 30;
+    var price = serviceOpt ? parseFloat(serviceOpt.getAttribute('data-price')) || 0 : 0;
 
     var dateStr = data.get('date');
     var timeStr = data.get('time');
@@ -304,6 +407,7 @@ safe(function bookingForm() {
 
     submitBtn.disabled = true;
     setStatus('Confirmando turno…', 'loading');
+    if (depositBox) depositBox.innerHTML = '';
 
     var addToCalUrl = googleCalendarLink(payload, start, end);
 
@@ -314,6 +418,7 @@ safe(function bookingForm() {
           'success'
         );
         submitBtn.disabled = false;
+        renderDepositOffer(payload, price);
       }, 600);
       return;
     }
@@ -334,6 +439,7 @@ safe(function bookingForm() {
           );
           form.reset();
           renderSlots([]);
+          renderDepositOffer(payload, price);
         } else {
           throw new Error('respuesta no ok');
         }

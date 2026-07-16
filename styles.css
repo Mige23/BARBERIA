@@ -530,6 +530,19 @@ p { margin: 0 0 var(--space-2); }
 .form-status[data-state="loading"] { color: var(--muted); }
 .form-status a { text-decoration: underline; color: var(--gold-light); }
 
+.deposit-offer__box {
+  margin-top: var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+}
+.deposit-offer__box p {
+  margin: 0 0 var(--space-1);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 @media (max-width: 860px) {
   .booking__grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }

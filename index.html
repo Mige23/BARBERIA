@@ -265,14 +265,14 @@
             <label for="f-service">Servicio</label>
             <select id="f-service" name="service" required>
               <option value="" disabled selected>Elegí un servicio</option>
-              <option value="corte-clasico" data-duration="30">Corte Clásico — $18</option>
-              <option value="afeitado-navaja" data-duration="40">Afeitado con Navaja — $25</option>
-              <option value="arreglo-barba" data-duration="25">Arreglo de Barba — $15</option>
-              <option value="combo-golden" data-duration="60">Combo Golden (Corte + Barba) — $35</option>
-              <option value="color-canas" data-duration="45">Coloración y Canas — $22</option>
-              <option value="diseno-lineas" data-duration="20">Diseño y Líneas — $12</option>
-              <option value="tratamiento-capilar" data-duration="30">Tratamiento Capilar — $20</option>
-              <option value="corte-infantil" data-duration="25">Corte Infantil — $14</option>
+              <option value="corte-clasico" data-duration="30" data-price="18">Corte Clásico — $18</option>
+              <option value="afeitado-navaja" data-duration="40" data-price="25">Afeitado con Navaja — $25</option>
+              <option value="arreglo-barba" data-duration="25" data-price="15">Arreglo de Barba — $15</option>
+              <option value="combo-golden" data-duration="60" data-price="35">Combo Golden (Corte + Barba) — $35</option>
+              <option value="color-canas" data-duration="45" data-price="22">Coloración y Canas — $22</option>
+              <option value="diseno-lineas" data-duration="20" data-price="12">Diseño y Líneas — $12</option>
+              <option value="tratamiento-capilar" data-duration="30" data-price="20">Tratamiento Capilar — $20</option>
+              <option value="corte-infantil" data-duration="25" data-price="14">Corte Infantil — $14</option>
             </select>
           </div>
         </div>
@@ -308,6 +308,7 @@
         </div>
 
         <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        <div class="deposit-offer" id="deposit-offer"></div>
 
         <button type="submit" class="btn btn--primary btn--block" id="form-submit">
           <span class="btn__label">Confirmar turno</span>

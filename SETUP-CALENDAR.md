@@ -64,3 +64,8 @@ los cambios se apliquen a la URL ya publicada.
 - Si cada barbero tiene su propio Google Calendar, se puede extender
   `Code.gs` para recibir `data.barber` y elegir el calendario correspondiente
   con `CalendarApp.getCalendarById(...)` en vez de `getDefaultCalendar()`.
+
+## ¿Querés cobrar una seña al agendar?
+
+Ver [`SETUP-MERCADOPAGO.md`](SETUP-MERCADOPAGO.md) para conectar Mercado Pago
+y cobrar un depósito parcial al confirmar el turno.
