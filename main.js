@@ -358,10 +358,14 @@ safe(function bookingForm() {
         if (!url) throw new Error((result && result.error) || 'No se pudo iniciar el pago');
         window.location.href = url;
       })
-      .catch(function () {
+      .catch(function (err) {
         btn.disabled = false;
         btn.textContent = 'Pagar seña con Mercado Pago';
-        setStatus('No pudimos iniciar el pago de la seña. Intentá de nuevo o contactanos.', 'error');
+        var detail = err && err.message;
+        setStatus(
+          'No pudimos iniciar el pago de la seña' + (detail ? ': ' + detail : '.') + ' Intentá de nuevo o contactanos.',
+          'error'
+        );
       });
   }
 
