@@ -415,9 +415,8 @@ safe(function bookingForm() {
       })
       .catch(function () {
         setStatus(
-          'No pudimos confirmar automáticamente. Escribinos por WhatsApp o llamanos, o ' +
-          'guardá el turno en tu propio calendario mientras lo confirmamos.',
-          'error'
+          'El turno se hará efectivo después de abonar la seña.',
+          'loading'
         );
       })
       .finally(function () {
