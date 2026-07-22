@@ -18,8 +18,9 @@ window.__BRAND__ = {
   CLOSE_HOUR: 20,
   SATURDAY_CLOSE_HOUR: 18,
   SLOT_MINUTES: 30,
-  DEPOSIT_PERCENT: 30, // % del precio del servicio a cobrar como seña. 0 = deshabilitado.
-  CURRENCY: 'ARS'
+  DEPOSIT_PERCENT: 10, // % del precio del servicio a cobrar como seña. 0 = deshabilitado.
+  CURRENCY: 'ARS',
+  MP_PAYMENT_LINK: 'https://link.mercadopago.com.ar/gidmp' // link de pago fijo de Mercado Pago
 };
 
 function safe(fn, name) {
@@ -307,14 +308,6 @@ safe(function bookingForm() {
     var box = document.createElement('div');
     box.className = 'deposit-offer__box';
 
-    if (!CFG.CALENDAR_ENDPOINT) {
-      var demoText = document.createElement('p');
-      demoText.textContent = 'Para habilitar el cobro de señas con Mercado Pago, conectá Google Calendar y Mercado Pago (ver SETUP-CALENDAR.md y SETUP-MERCADOPAGO.md).';
-      box.appendChild(demoText);
-      depositBox.appendChild(box);
-      return;
-    }
-
     var text = document.createElement('p');
     text.textContent = 'Podés reservar tu horario pagando una seña de $' + amount + ' ' + CFG.CURRENCY +
       ' (' + CFG.DEPOSIT_PERCENT + '% del servicio) con Mercado Pago.';
@@ -323,50 +316,19 @@ safe(function bookingForm() {
     btn.type = 'button';
     btn.className = 'btn btn--ghost btn--block';
     btn.textContent = 'Pagar seña con Mercado Pago';
-    btn.addEventListener('click', function () { payDeposit(payload, amount, btn); });
+    btn.addEventListener('click', function () { payDeposit(btn); });
 
     box.appendChild(text);
     box.appendChild(btn);
     depositBox.appendChild(box);
   }
 
-  function payDeposit(payload, amount, btn) {
+  function payDeposit(btn) {
     btn.disabled = true;
     btn.textContent = 'Redirigiendo a Mercado Pago…';
-
-    var returnUrl = location.origin + location.pathname;
-    var prefPayload = {
-      action: 'create_preference',
-      title: 'Seña — ' + payload.serviceLabel + ' (' + payload.date + ' ' + payload.time + ')',
-      amount: amount,
-      name: payload.name,
-      email: payload.email,
-      date: payload.date,
-      time: payload.time,
-      service: payload.service,
-      returnUrl: returnUrl
-    };
-    if (CFG.CALENDAR_SECRET) prefPayload.secret = CFG.CALENDAR_SECRET;
-
-    fetch(CFG.CALENDAR_ENDPOINT, {
-      method: 'POST',
-      body: JSON.stringify(prefPayload)
-    })
-      .then(function (r) { return r.json(); })
-      .then(function (result) {
-        var url = result && result.ok && (result.initPoint || result.sandboxInitPoint);
-        if (!url) throw new Error((result && result.error) || 'No se pudo iniciar el pago');
-        window.location.href = url;
-      })
-      .catch(function (err) {
-        btn.disabled = false;
-        btn.textContent = 'Pagar seña con Mercado Pago';
-        var detail = err && err.message;
-        setStatus(
-          'No pudimos iniciar el pago de la seña' + (detail ? ': ' + detail : '.') + ' Intentá de nuevo o contactanos.',
-          'error'
-        );
-      });
+    // Al ser un link de link.mercadopago.com.ar, el propio sistema operativo
+    // abre la app de Mercado Pago si está instalada, o el navegador si no.
+    window.location.href = CFG.MP_PAYMENT_LINK;
   }
 
   form.addEventListener('submit', function (e) {
