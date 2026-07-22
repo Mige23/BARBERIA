@@ -409,7 +409,6 @@ safe(function bookingForm() {
           );
           form.reset();
           renderSlots([]);
-          renderDepositOffer(payload, price);
         } else {
           throw new Error('respuesta no ok');
         }
@@ -429,6 +428,7 @@ safe(function bookingForm() {
         link.rel = 'noopener';
         link.textContent = ' Añadir a mi calendario personal →';
         status.appendChild(link);
+        renderDepositOffer(payload, price);
       });
   });
 }, 'bookingForm');
