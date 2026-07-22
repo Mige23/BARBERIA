@@ -279,10 +279,23 @@
 
         <div class="form-row">
           <div class="field">
+            <label for="f-quantity">Cantidad</label>
+            <select id="f-quantity" name="quantity">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div class="field">
             <label for="f-date">Fecha</label>
             <input type="date" id="f-date" name="date" required>
           </div>
-          <div class="field">
+        </div>
+
+        <div class="form-row">
+          <div class="field field--full">
             <label for="f-time">Horario</label>
             <select id="f-time" name="time" required>
               <option value="" disabled selected>Elegí una fecha primero</option>

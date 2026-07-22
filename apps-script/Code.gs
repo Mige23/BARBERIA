@@ -4,10 +4,14 @@
  *
  * GET  ?action=availability&date=YYYY-MM-DD  -> horarios ocupados ese día
  * POST (sin action, o action=create_booking) { name, phone, email, service, serviceLabel,
- *      date, time, duration, barber, notes } -> crea el evento en el Google Calendar
+ *      quantity, date, time, duration, barber, notes } -> crea el evento en el Google Calendar
  * POST action=create_preference { title, amount, name, email, date, time, service, returnUrl }
  *      -> crea una preferencia de pago en Mercado Pago y devuelve el link de checkout
  */
+
+// Minutos antes del turno en los que Google Calendar te manda el mail de
+// recordatorio (a la cuenta dueña de este calendario). 60 = 1 hora antes.
+var REMINDER_MINUTES_BEFORE = 60;
 
 // IMPORTANTE: Para mayor seguridad, definí un token secreto aquí
 // y pegalo también en el frontend (`main.js`) como `CALENDAR_SECRET`.
@@ -72,12 +76,15 @@ function createBooking(data) {
   var durationMinutes = parseInt(data.duration, 10) || 30;
   var end = new Date(start.getTime() + durationMinutes * 60000);
 
-  var title = 'Turno: ' + (data.serviceLabel || data.service) + ' — ' + data.name;
+  var quantity = parseInt(data.quantity, 10) || 1;
+  var serviceText = (data.serviceLabel || data.service) + (quantity > 1 ? ' x' + quantity : '');
+
+  var title = 'Turno: ' + serviceText + ' — ' + data.name;
   var description = [
     'Cliente: ' + data.name,
     'Teléfono: ' + data.phone,
     'Email: ' + (data.email || '-'),
-    'Servicio: ' + (data.serviceLabel || data.service),
+    'Servicio: ' + serviceText,
     'Barbero: ' + (data.barber || 'Cualquiera'),
     'Comentarios: ' + (data.notes || '-')
   ].join('\n');
@@ -86,6 +93,9 @@ function createBooking(data) {
     description: description,
     location: 'Golden Barbershop'
   });
+
+  // Recordatorio por mail para el dueño del calendario (además del popup por defecto).
+  event.addEmailReminder(REMINDER_MINUTES_BEFORE);
 
   return jsonResponse({ ok: true, eventId: event.getId() });
 }

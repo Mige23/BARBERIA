@@ -284,9 +284,9 @@ safe(function bookingForm() {
     }
     var params = new URLSearchParams({
       action: 'TEMPLATE',
-      text: 'Turno en Golden Barbershop — ' + payload.serviceLabel,
+      text: 'Turno en Golden Barbershop — ' + payload.serviceLabel + (payload.quantity > 1 ? ' x' + payload.quantity : ''),
       dates: toGCalDate(startDate) + '/' + toGCalDate(endDate),
-      details: 'Servicio: ' + payload.serviceLabel + '\nBarbero: ' + payload.barber + (payload.notes ? '\nComentarios: ' + payload.notes : ''),
+      details: 'Servicio: ' + payload.serviceLabel + (payload.quantity > 1 ? ' x' + payload.quantity : '') + '\nBarbero: ' + payload.barber + (payload.notes ? '\nComentarios: ' + payload.notes : ''),
       location: 'Av. Principal 123, Ciudad'
     });
     return 'https://calendar.google.com/calendar/render?' + params.toString();
@@ -374,8 +374,11 @@ safe(function bookingForm() {
 
     var data = new FormData(form);
     var serviceOpt = serviceSelect.options[serviceSelect.selectedIndex];
-    var duration = serviceOpt ? parseInt(serviceOpt.getAttribute('data-duration'), 10) || 30 : 30;
-    var price = serviceOpt ? parseFloat(serviceOpt.getAttribute('data-price')) || 0 : 0;
+    var baseDuration = serviceOpt ? parseInt(serviceOpt.getAttribute('data-duration'), 10) || 30 : 30;
+    var basePrice = serviceOpt ? parseFloat(serviceOpt.getAttribute('data-price')) || 0 : 0;
+    var quantity = parseInt(data.get('quantity'), 10) || 1;
+    var duration = baseDuration * quantity;
+    var price = basePrice * quantity;
 
     var dateStr = data.get('date');
     var timeStr = data.get('time');
@@ -399,6 +402,7 @@ safe(function bookingForm() {
       email: data.get('email') || '',
       service: data.get('service'),
       serviceLabel: serviceOpt ? serviceOpt.textContent : data.get('service'),
+      quantity: quantity,
       date: dateStr,
       time: timeStr,
       duration: duration,
